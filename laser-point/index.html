@@ -3,55 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laser Point - Creazioni Personalizzate</title>
+    <title>Laser Point | Creazioni Artigianali Personalizzate</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
-        .active-filter { 
+        
+        .cat-btn-active { 
             background-color: #2563eb !important; 
             color: white !important; 
-            border-color: #2563eb !important; 
-            transform: scale(1.05);
+            border-color: #2563eb !important;
+            box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3);
         }
+
+        .product-card { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .product-card:hover { transform: translateY(-8px); }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900">
 
     <nav class="bg-white/80 backdrop-blur-md sticky top-0 z-50 py-4 border-b border-slate-200">
         <div class="container mx-auto px-6 flex justify-between items-center">
-            <h1 class="text-2xl font-extrabold tracking-tighter italic">LASER<span class="text-blue-600">POINT</span></h1>
-            <a href="/admin.html" class="text-[10px] font-bold uppercase tracking-widest text-slate-400 hover:text-blue-600 transition">Area Admin</a>
+            <h1 class="text-2xl font-extrabold tracking-tighter italic">
+                LASER<span class="text-blue-600">POINT</span>
+            </h1>
+            <div class="flex gap-6 items-center">
+                <a href="#prodotti" class="text-sm font-semibold hover:text-blue-600 transition">Catalogo</a>
+                <a href="/admin.html" class="text-[10px] font-bold uppercase tracking-widest bg-slate-100 px-3 py-1.5 rounded-lg text-slate-500 hover:bg-blue-600 hover:text-white transition">Admin</a>
+            </div>
         </div>
     </nav>
 
-    <header class="bg-slate-900 text-white py-20 relative overflow-hidden">
+    <header class="bg-slate-900 text-white py-24 relative overflow-hidden">
         <div class="container mx-auto px-6 text-center relative z-10">
-            <span class="text-blue-400 font-bold text-sm tracking-widest uppercase">Artigianato Digitale</span>
-            <h2 class="text-5xl md:text-6xl font-extrabold mt-4 mb-6 tracking-tight">Taglio Laser di Precisione</h2>
-            <p class="text-slate-400 max-w-2xl mx-auto text-lg">Trasformiamo legno e plexiglass in ricordi unici per le tue feste, eventi e cerimonie.</p>
+            <span class="inline-block bg-blue-600/20 text-blue-400 font-bold text-xs tracking-[0.2em] uppercase px-4 py-2 rounded-full mb-6">
+                Villa San Giovanni • Calabria
+            </span>
+            <h2 class="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight">Emozioni incise nel <span class="text-blue-500">legno.</span></h2>
+            <p class="text-slate-400 max-w-2xl mx-auto text-lg md:text-xl leading-relaxed">
+                Realizziamo decorazioni uniche e regali personalizzati con taglio laser di alta precisione. 
+                Dalle cerimonie ai piccoli pensieri quotidiani.
+            </p>
         </div>
         <div class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
             <svg width="100%" height="100%"><defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#grid)"/></svg>
         </div>
     </header>
 
-    <section class="py-10 bg-white border-b sticky top-[65px] z-40">
-        <div id="cat-nav" class="container mx-auto px-6 flex flex-wrap justify-center gap-3">
-            <button onclick="filterBy('all', this)" class="cat-btn active-filter px-6 py-2.5 rounded-full border border-slate-200 bg-white text-sm font-bold transition-all shadow-sm">Tutti i Prodotti</button>
-            </div>
+    <section class="py-12 bg-white border-b border-slate-200 sticky top-[65px] z-40">
+        <div class="container mx-auto px-6">
+            <div id="cat-nav" class="flex flex-wrap justify-center gap-3">
+                <button onclick="filterBy('all', this)" class="cat-btn cat-btn-active px-6 py-2.5 rounded-full border border-slate-200 bg-white text-sm font-bold transition-all">
+                    Tutto il Catalogo
+                </button>
+                </div>
+        </div>
     </section>
 
-    <main class="container mx-auto px-6 py-16">
-        <div id="prod-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-            <div class="animate-pulse bg-slate-200 h-80 rounded-3xl"></div>
-            <div class="animate-pulse bg-slate-200 h-80 rounded-3xl"></div>
-            <div class="animate-pulse bg-slate-200 h-80 rounded-3xl"></div>
+    <main id="prodotti" class="container mx-auto px-6 py-20">
+        <div id="prod-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+            <div class="col-span-full text-center py-20">
+                <div class="inline-block animate-spin rounded-full h-8 w-8 border-4 border-blue-600 border-t-transparent"></div>
+                <p class="mt-4 text-slate-500 font-medium">Caricamento creazioni...</p>
+            </div>
         </div>
     </main>
 
-    <footer class="bg-white border-t py-12 text-center text-slate-400 text-sm">
-        <p>&copy; 2026 Laser Point - Villa San Giovanni. Tutti i diritti riservati.</p>
+    <footer class="bg-white border-t border-slate-200 py-16">
+        <div class="container mx-auto px-6 text-center">
+            <h3 class="text-xl font-bold mb-4 italic">LASERPOINT</h3>
+            <p class="text-slate-500 text-sm mb-8">Seguici per scoprire le ultime novità e le lavorazioni personalizzate.</p>
+            <div class="text-slate-400 text-xs font-medium uppercase tracking-widest">
+                &copy; 2026 Laser Point Villa San Giovanni. Made with 💙
+            </div>
+        </div>
     </footer>
 
     <script>
@@ -59,60 +84,91 @@
 
         async function init() {
             try {
-                const res = await fetch('/api/products');
-                const data = await res.json();
+                // 1. Carica le Categorie dal nuovo endpoint pulito
+                const resCat = await fetch('/api/categories');
+                const categories = await resCat.json();
                 
-                const categories = data.filter(i => i.id.startsWith('cat_'));
-                allProducts = data.filter(i => i.id.startsWith('prod_'));
-
                 const catNav = document.getElementById('cat-nav');
                 categories.forEach(c => {
                     catNav.innerHTML += `
-                        <button onclick="filterBy('${c.name}', this)" class="cat-btn px-6 py-2.5 rounded-full border border-slate-200 bg-white text-sm font-bold transition-all hover:border-blue-600 shadow-sm">
-                            ${c.name}
+                        <button onclick="filterBy('${c}', this)" class="cat-btn px-6 py-2.5 rounded-full border border-slate-200 bg-white text-sm font-bold transition-all hover:border-blue-600 hover:bg-slate-50 shadow-sm">
+                            ${c}
                         </button>`;
                 });
 
+                // 2. Carica i Prodotti
+                const resProd = await fetch('/api/products');
+                allProducts = await resProd.json();
+
                 render(allProducts);
             } catch (e) {
-                document.getElementById('prod-grid').innerHTML = "<p class='text-center col-span-full'>Errore nel caricamento dei prodotti.</p>";
+                console.error("Errore inizializzazione:", e);
+                document.getElementById('prod-grid').innerHTML = `
+                    <div class="col-span-full text-center py-20 bg-red-50 rounded-3xl border border-red-100 text-red-600">
+                        Si è verificato un errore nel caricamento dei dati. Riprova tra pochi istanti.
+                    </div>`;
             }
         }
 
-        function filterBy(name, el) {
-            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active-filter'));
-            el.classList.add('active-filter');
+        function filterBy(categoryName, element) {
+            // Aggiorna stile bottoni
+            document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('cat-btn-active'));
+            element.classList.add('cat-btn-active');
 
-            const filtered = name === 'all' ? allProducts : allProducts.filter(p => p.category === name);
+            // Filtra prodotti
+            const filtered = categoryName === 'all' 
+                ? allProducts 
+                : allProducts.filter(p => p.category === categoryName);
+            
             render(filtered);
+            
+            // Scroll fluido verso la griglia
+            document.getElementById('prodotti').scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
         function render(list) {
             const grid = document.getElementById('prod-grid');
+            
             if(list.length === 0) {
-                grid.innerHTML = '<p class="col-span-full text-center text-slate-400 py-20">Nessun articolo trovato in questa categoria.</p>';
+                grid.innerHTML = `
+                    <div class="col-span-full text-center py-32">
+                        <p class="text-slate-400 text-lg">Nessun prodotto disponibile in questa categoria.</p>
+                    </div>`;
                 return;
             }
+
             grid.innerHTML = list.map(p => `
-                <div class="bg-white rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-slate-100 group">
-                    <div class="overflow-hidden h-72">
-                        <img src="${p.image || 'https://via.placeholder.com/600x400'}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                <div class="product-card bg-white rounded-[2.5rem] overflow-hidden shadow-sm border border-slate-100 group">
+                    <div class="relative overflow-hidden h-80 bg-slate-200">
+                        <img src="${p.image || 'https://via.placeholder.com/600x800'}" 
+                             alt="${p.name}" 
+                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute top-4 left-4">
+                            <span class="bg-white/90 backdrop-blur-md text-blue-600 text-[10px] font-black uppercase tracking-widest px-4 py-2 rounded-2xl shadow-sm">
+                                ${p.category}
+                            </span>
+                        </div>
                     </div>
                     <div class="p-8">
-                        <div class="flex justify-between items-start mb-4">
-                            <span class="text-[10px] font-bold text-blue-600 uppercase tracking-[0.2em] bg-blue-50 px-3 py-1 rounded-full">${p.category}</span>
-                            <span class="text-xs text-slate-400 font-medium">${p.material || ''}</span>
-                        </div>
-                        <h3 class="text-2xl font-bold mb-3 tracking-tight">${p.name}</h3>
-                        <p class="text-slate-500 text-sm leading-relaxed mb-6 line-clamp-2">${p.description || ''}</p>
+                        <h3 class="text-2xl font-extrabold mb-2 tracking-tight text-slate-800">${p.name}</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed mb-6 line-clamp-2">
+                            ${p.description || 'Nessuna descrizione disponibile per questo articolo artigianale.'}
+                        </p>
                         <div class="flex justify-between items-center pt-6 border-t border-slate-50">
-                            <span class="text-3xl font-black text-slate-900">€${parseFloat(p.price).toFixed(2)}</span>
-                            <button class="bg-slate-900 text-white px-6 py-3 rounded-2xl text-sm font-bold hover:bg-blue-600 transition shadow-lg shadow-slate-200">Ordina</button>
+                            <div class="flex flex-col">
+                                <span class="text-xs text-slate-400 font-bold uppercase tracking-tighter">Prezzo</span>
+                                <span class="text-3xl font-black text-slate-900 italic">€${parseFloat(p.price).toFixed(2)}</span>
+                            </div>
+                            <a href="https://wa.me/TUONUMERO" target="_blank" class="bg-slate-900 text-white px-6 py-3.5 rounded-2xl text-sm font-bold hover:bg-blue-600 transition-all shadow-xl shadow-slate-200">
+                                Ordina ora
+                            </a>
                         </div>
                     </div>
                 </div>
             `).join('');
         }
+
+        // Avvio
         init();
     </script>
 </body>
