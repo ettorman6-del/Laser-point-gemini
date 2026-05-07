@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laser Point | Creazioni Artigianali Personalizzate</title>
+    <title>Laser Point | Creazioni Artigianali di Pino Tripodi</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; scroll-behavior: smooth; }
         
         .cat-btn-active { 
             background-color: #2563eb !important; 
@@ -24,11 +25,20 @@
 
     <nav class="bg-white/80 backdrop-blur-md sticky top-0 z-50 py-4 border-b border-slate-200">
         <div class="container mx-auto px-6 flex justify-between items-center">
-            <h1 class="text-2xl font-extrabold tracking-tighter italic">
+            <h1 class="text-2xl font-extrabold tracking-tighter italic text-slate-800">
                 LASER<span class="text-blue-600">POINT</span>
             </h1>
-            <div class="flex gap-6 items-center">
-                <a href="#prodotti" class="text-sm font-semibold hover:text-blue-600 transition">Catalogo</a>
+            
+            <div class="flex items-center gap-5">
+                <div class="hidden md:flex items-center gap-4 border-r border-slate-200 pr-5">
+                    <a href="https://www.instagram.com/pino.tripodi.1" target="_blank" class="text-slate-400 hover:text-pink-600 transition text-xl">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                    <a href="https://www.facebook.com/pino.tripodi.1" target="_blank" class="text-slate-400 hover:text-blue-700 transition text-xl">
+                        <i class="fa-brands fa-facebook"></i>
+                    </a>
+                </div>
+                
                 <a href="/admin.html" class="text-[10px] font-bold uppercase tracking-widest bg-slate-100 px-3 py-1.5 rounded-lg text-slate-500 hover:bg-blue-600 hover:text-white transition">Admin</a>
             </div>
         </div>
@@ -37,26 +47,30 @@
     <header class="bg-slate-900 text-white py-24 relative overflow-hidden">
         <div class="container mx-auto px-6 text-center relative z-10">
             <span class="inline-block bg-blue-600/20 text-blue-400 font-bold text-xs tracking-[0.2em] uppercase px-4 py-2 rounded-full mb-6">
-                Gioia Tauro • Calabria
+                Artigianato Digitale • Villa San Giovanni
             </span>
-            <h2 class="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight">Emozioni incise nel <span class="text-blue-500">legno & Plexiglass.</span></h2>
+            <h2 class="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight">Le creazioni di <span class="text-blue-500">Pino Tripodi</span></h2>
             <p class="text-slate-400 max-w-2xl mx-auto text-lg md:text-xl leading-relaxed">
-                Realizziamo decorazioni uniche e regali personalizzati con taglio laser di alta precisione. 
-                Dalle cerimonie ai piccoli pensieri quotidiani.
+                Trasformiamo legno e plexiglass in opere d'arte personalizzate. 
+                Qualità laser per i tuoi eventi più importanti.
             </p>
+            <div class="mt-10 flex justify-center gap-4">
+                <a href="#prodotti" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-2xl font-bold transition shadow-lg shadow-blue-900/20">Sfoglia Catalogo</a>
+                <a href="https://wa.me/393474572048" target="_blank" class="bg-white/10 hover:bg-white/20 backdrop-blur-md text-white px-8 py-4 rounded-2xl font-bold transition border border-white/10">Contattami</a>
+            </div>
         </div>
         <div class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
             <svg width="100%" height="100%"><defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#grid)"/></svg>
         </div>
     </header>
 
-    <section class="py-12 bg-white border-b border-slate-200 sticky top-[65px] z-40">
+    <section class="py-10 bg-white border-b border-slate-200 sticky top-[65px] z-40 shadow-sm">
         <div class="container mx-auto px-6">
             <div id="cat-nav" class="flex flex-wrap justify-center gap-3">
                 <button onclick="filterBy('all', this)" class="cat-btn cat-btn-active px-6 py-2.5 rounded-full border border-slate-200 bg-white text-sm font-bold transition-all">
-                    Tutto il Catalogo
+                    Tutte le creazioni
                 </button>
-                </div>
+            </div>
         </div>
     </section>
 
@@ -64,17 +78,37 @@
         <div id="prod-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
             <div class="col-span-full text-center py-20">
                 <div class="inline-block animate-spin rounded-full h-8 w-8 border-4 border-blue-600 border-t-transparent"></div>
-                <p class="mt-4 text-slate-500 font-medium">Caricamento creazioni...</p>
             </div>
         </div>
     </main>
 
-    <footer class="bg-white border-t border-slate-200 py-16">
+    <footer class="bg-white border-t border-slate-200 py-20">
         <div class="container mx-auto px-6 text-center">
-            <h3 class="text-xl font-bold mb-4 italic">LASERPOINT</h3>
-            <p class="text-slate-500 text-sm mb-8">Seguici per scoprire le ultime novità e le lavorazioni personalizzate.</p>
-            <div class="text-slate-400 text-xs font-medium uppercase tracking-widest">
-                &copy; 2026 Laser Point Gioia Tauro. Made with 💙
+            <h3 class="text-2xl font-black mb-6 italic tracking-tighter text-slate-800">
+                LASER<span class="text-blue-600">POINT</span>
+            </h3>
+            
+            <p class="text-slate-500 text-sm mb-10 max-w-md mx-auto leading-relaxed">
+                Creazioni artigianali realizzate a Villa San Giovanni (RC). <br>
+                Seguimi sui social per scoprire i nuovi lavori ogni giorno!
+            </p>
+            
+            <div class="flex justify-center gap-5 mb-12">
+                <a href="https://www.instagram.com/pino.tripodi.1" target="_blank" class="w-14 h-14 flex items-center justify-center rounded-2xl bg-slate-50 text-slate-600 hover:bg-pink-50 hover:text-pink-600 transition-all border border-slate-100 shadow-sm">
+                    <i class="fa-brands fa-instagram text-2xl"></i>
+                </a>
+                <a href="https://www.facebook.com/pino.tripodi.1" target="_blank" class="w-14 h-14 flex items-center justify-center rounded-2xl bg-slate-50 text-slate-600 hover:bg-blue-50 hover:text-blue-700 transition-all border border-slate-100 shadow-sm">
+                    <i class="fa-brands fa-facebook-f text-2xl"></i>
+                </a>
+                <a href="https://wa.me/393474572048" target="_blank" class="w-14 h-14 flex items-center justify-center rounded-2xl bg-slate-50 text-slate-600 hover:bg-green-50 hover:text-green-500 transition-all border border-slate-100 shadow-sm">
+                    <i class="fa-brands fa-whatsapp text-2xl"></i>
+                </a>
+            </div>
+
+            <div class="pt-8 border-t border-slate-100">
+                <div class="text-slate-400 text-[10px] font-bold uppercase tracking-[0.4em]">
+                    &copy; 2026 Laser Point di Pino Tripodi • Villa San Giovanni
+                </div>
             </div>
         </div>
     </footer>
@@ -84,7 +118,7 @@
 
         async function init() {
             try {
-                // 1. Carica le Categorie dal nuovo endpoint pulito
+                // Carica Categorie
                 const resCat = await fetch('/api/categories');
                 const categories = await resCat.json();
                 
@@ -96,81 +130,69 @@
                         </button>`;
                 });
 
-                // 2. Carica i Prodotti
+                // Carica Prodotti
                 const resProd = await fetch('/api/products');
                 allProducts = await resProd.json();
 
                 render(allProducts);
             } catch (e) {
-                console.error("Errore inizializzazione:", e);
-                document.getElementById('prod-grid').innerHTML = `
-                    <div class="col-span-full text-center py-20 bg-red-50 rounded-3xl border border-red-100 text-red-600">
-                        Si è verificato un errore nel caricamento dei dati. Riprova tra pochi istanti.
-                    </div>`;
+                console.error("Errore:", e);
+                document.getElementById('prod-grid').innerHTML = "<p class='col-span-full text-center py-20 text-slate-400'>Errore nel caricamento. Riprova più tardi.</p>";
             }
         }
 
         function filterBy(categoryName, element) {
-            // Aggiorna stile bottoni
             document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('cat-btn-active'));
             element.classList.add('cat-btn-active');
 
-            // Filtra prodotti
-            const filtered = categoryName === 'all' 
-                ? allProducts 
-                : allProducts.filter(p => p.category === categoryName);
-            
+            const filtered = categoryName === 'all' ? allProducts : allProducts.filter(p => p.category === categoryName);
             render(filtered);
-            
-            // Scroll fluido verso la griglia
-            document.getElementById('prodotti').scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
         function render(list) {
             const grid = document.getElementById('prod-grid');
             
             if(list.length === 0) {
-                grid.innerHTML = `
-                    <div class="col-span-full text-center py-32">
-                        <p class="text-slate-400 text-lg">Nessun prodotto disponibile in questa categoria.</p>
-                    </div>`;
+                grid.innerHTML = '<div class="col-span-full text-center py-32 text-slate-400 font-medium">Nessun prodotto trovato.</div>';
                 return;
             }
 
-            grid.innerHTML = list.map(p => `
+            grid.innerHTML = list.map(p => {
+                // Messaggio WhatsApp personalizzato per ogni prodotto
+                const waMessage = encodeURIComponent(`Ciao Pino! Ho visto sul tuo sito il prodotto "${p.name}" (Prezzo: €${p.price}) e vorrei avere maggiori informazioni per ordinarlo.`);
+                
+                return `
                 <div class="product-card bg-white rounded-[2.5rem] overflow-hidden shadow-sm border border-slate-100 group">
                     <div class="relative overflow-hidden h-80 bg-slate-200">
                         <img src="${p.image || 'https://via.placeholder.com/600x800'}" 
                              alt="${p.name}" 
                              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                         <div class="absolute top-4 left-4">
-                            <span class="bg-white/90 backdrop-blur-md text-blue-600 text-[10px] font-black uppercase tracking-widest px-4 py-2 rounded-2xl shadow-sm">
+                            <span class="bg-white/95 backdrop-blur-sm text-blue-600 text-[10px] font-black uppercase tracking-widest px-4 py-2 rounded-2xl shadow-sm border border-slate-100">
                                 ${p.category}
                             </span>
                         </div>
                     </div>
                     <div class="p-8">
                         <h3 class="text-2xl font-extrabold mb-2 tracking-tight text-slate-800">${p.name}</h3>
-                        <p class="text-slate-500 text-sm leading-relaxed mb-6 line-clamp-2">
-                            ${p.description || 'Nessuna descrizione disponibile per questo articolo artigianale.'}
+                        <p class="text-slate-500 text-sm leading-relaxed mb-6 line-clamp-2 italic">
+                            ${p.material ? 'Materiale: ' + p.material : 'Lavorazione artigianale su misura'}
                         </p>
                         <div class="flex justify-between items-center pt-6 border-t border-slate-50">
                             <div class="flex flex-col">
-                                <span class="text-xs text-slate-400 font-bold uppercase tracking-tighter">Prezzo</span>
+                                <span class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Prezzo</span>
                                 <span class="text-3xl font-black text-slate-900 italic">€${parseFloat(p.price).toFixed(2)}</span>
                             </div>
-                            <a href="https://wa.me/3474572048?text=${encodeURIComponent('Ciao! Vorrei ordinare il prodotto: ' + p.name + ' (Prezzo: €' + p.price + ')')}"
-                               target="_blank"
-                               class="bg-slate-900 text-white px-6 py-3.5 rounded-2xl text-sm font-bold hover:bg-blue-600 transition-all shadow-xl shadow-slate-200 text-center">
-                                Ordina ora
+                            <a href="https://wa.me/393474572048?text=${waMessage}" target="_blank" 
+                               class="bg-slate-900 text-white px-6 py-3.5 rounded-2xl text-sm font-bold hover:bg-green-600 transition-all shadow-xl shadow-slate-200 flex items-center gap-2">
+                                <i class="fa-brands fa-whatsapp text-lg"></i> Ordina
                             </a>
                         </div>
                     </div>
                 </div>
-            `).join('');
+            `}).join('');
         }
 
-        // Avvio
         init();
     </script>
 </body>
