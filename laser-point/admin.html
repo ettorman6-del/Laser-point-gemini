@@ -2,177 +2,167 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <title>Laser Point - Admin & Categorie</title>
+    <title>Laser Point - Admin Panel</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-slate-50 min-h-screen">
-    <div class="container mx-auto px-4 py-8 max-w-6xl">
-        <div class="flex justify-between items-center mb-8 bg-white p-6 rounded-2xl shadow-sm">
-            <h1 class="text-2xl font-black text-slate-800">LASER POINT <span class="text-blue-600">ADMIN</span></h1>
-            <div id="authArea">
-                <div id="loginSection" class="flex gap-2">
-                    <input type="password" id="adminToken" placeholder="Password" class="p-2 border rounded-lg text-sm">
-                    <button onclick="saveToken()" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-bold">Accedi</button>
-                </div>
-                <div id="logoutSection" class="hidden">
-                    <button onclick="logout()" class="text-red-500 text-sm font-bold border border-red-200 px-4 py-2 rounded-lg hover:bg-red-50">Esci</button>
-                </div>
+<body class="bg-slate-50 min-h-screen p-4 md:p-8">
+    <div class="max-w-6xl mx-auto">
+        
+        <div class="bg-white p-6 rounded-3xl shadow-sm border mb-8 flex flex-col md:flex-row justify-between items-center gap-4">
+            <h1 class="text-2xl font-black">LASER POINT <span class="text-blue-600 uppercase text-sm tracking-widest ml-2">Gestione</span></h1>
+            
+            <div id="login-box" class="flex gap-2">
+                <input type="password" id="pass-field" placeholder="Password Segreta" class="p-3 border rounded-xl text-sm outline-blue-500 shadow-inner">
+                <button onclick="login()" class="bg-blue-600 text-white px-6 py-2 rounded-xl font-bold hover:bg-blue-700 transition">Entra</button>
             </div>
+            
+            <button id="logout-btn" onclick="logout()" class="hidden text-red-500 font-bold hover:bg-red-50 px-4 py-2 rounded-xl border border-red-100 transition">Esci</button>
         </div>
 
-        <div id="mainContent" class="grid grid-cols-1 lg:grid-cols-3 gap-8 opacity-50 pointer-events-none transition-all">
-            <div class="space-y-6">
-                <div class="bg-white p-6 rounded-2xl shadow-sm border">
-                    <h2 class="font-bold mb-4 text-blue-600 uppercase text-xs tracking-widest">Nuova Categoria</h2>
-                    <div class="flex gap-2">
-                        <input type="text" id="newCatName" placeholder="Es: Comunioni" class="flex-1 p-2 border rounded-lg text-sm">
-                        <button onclick="addCategory()" class="bg-blue-600 text-white px-4 py-2 rounded-lg">+</button>
+        <div id="admin-panel" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <div class="lg:col-span-4 space-y-6">
+                <div class="bg-white p-6 rounded-3xl shadow-sm border">
+                    <h2 class="font-bold text-slate-800 mb-4 flex items-center gap-2">
+                        <span class="w-2 h-2 bg-blue-600 rounded-full"></span> 1. Categorie
+                    </h2>
+                    <div class="flex gap-2 mb-6">
+                        <input type="text" id="cat-name" placeholder="Nuova (es. Compleanni)" class="flex-1 p-3 border rounded-xl text-sm">
+                        <button onclick="saveCat()" class="bg-slate-900 text-white px-4 rounded-xl hover:bg-blue-600 transition">+</button>
                     </div>
-                    <div id="catList" class="mt-4 flex flex-wrap gap-2"></div>
+                    <div id="cat-list" class="space-y-2 max-h-40 overflow-y-auto pr-2">
+                        </div>
                 </div>
 
-                <div class="bg-white p-6 rounded-2xl shadow-sm border sticky top-4">
-                    <h2 id="formTitle" class="font-bold mb-4 uppercase text-xs tracking-widest">Dettagli Articolo</h2>
-                    <input type="hidden" id="editId">
+                <div class="bg-white p-6 rounded-3xl shadow-sm border sticky top-8">
+                    <h2 class="font-bold text-slate-800 mb-4 flex items-center gap-2">
+                        <span class="w-2 h-2 bg-blue-600 rounded-full"></span> 2. Nuovo Articolo
+                    </h2>
                     <div class="space-y-3">
-                        <input type="text" id="pName" placeholder="Titolo Oggetto" class="w-full p-2 border rounded-lg text-sm">
-                        <select id="pCat" class="w-full p-2 border rounded-lg text-sm bg-slate-50">
+                        <input type="text" id="p-name" placeholder="Nome Oggetto" class="w-full p-3 border rounded-xl text-sm">
+                        <select id="p-cat" class="w-full p-3 border rounded-xl text-sm bg-slate-50 outline-blue-500">
                             <option value="">Seleziona Categoria...</option>
                         </select>
-                        <textarea id="pDesc" placeholder="Descrizione..." class="w-full p-2 border rounded-lg text-sm h-20"></textarea>
                         <div class="flex gap-2">
-                            <input type="number" id="pPrice" placeholder="Prezzo €" step="0.01" class="w-1/2 p-2 border rounded-lg text-sm">
-                            <input type="text" id="pMat" placeholder="Materiale" class="w-1/2 p-2 border rounded-lg text-sm">
+                            <input type="number" id="p-price" placeholder="Prezzo €" step="0.01" class="w-1/2 p-3 border rounded-xl text-sm">
+                            <input type="text" id="p-mat" placeholder="Materiale" class="w-1/2 p-3 border rounded-xl text-sm">
                         </div>
-                        <input type="text" id="pImage" placeholder="Link Immagine ImgBB" class="w-full p-2 border rounded-lg text-sm">
-                        <button onclick="saveProduct()" class="w-full bg-slate-800 text-white py-3 rounded-xl font-bold hover:bg-blue-600 transition">SALVA ARTICOLO</button>
-                        <button onclick="resetForm()" id="btnCancel" class="hidden w-full py-2 text-xs text-slate-400">ANNULLA</button>
+                        <input type="text" id="p-img" placeholder="Link Immagine ImgBB" class="w-full p-3 border rounded-xl text-sm">
+                        <textarea id="p-desc" placeholder="Breve descrizione..." class="w-full p-3 border rounded-xl text-sm h-24"></textarea>
+                        
+                        <button onclick="saveProd()" class="w-full bg-blue-600 text-white py-4 rounded-2xl font-bold hover:bg-blue-700 shadow-lg shadow-blue-100 transition">
+                            Pubblica Prodotto
+                        </button>
                     </div>
                 </div>
             </div>
 
-            <div class="lg:col-span-2">
-                <div id="adminProductList" class="grid grid-cols-1 gap-4"></div>
+            <div class="lg:col-span-8">
+                <div class="bg-white p-8 rounded-3xl shadow-sm border h-full">
+                    <h2 class="font-bold text-slate-800 mb-6 uppercase text-xs tracking-widest italic">Inventario Attuale</h2>
+                    <div id="prod-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        </div>
+                </div>
             </div>
+
         </div>
     </div>
 
     <script>
-        function saveToken() {
-            localStorage.setItem('laser_token', document.getElementById('adminToken').value);
-            checkAuth();
+        const getAuth = () => localStorage.getItem('laser_token');
+        
+        function login() {
+            localStorage.setItem('laser_token', document.getElementById('pass-field').value);
+            location.reload();
         }
+        
         function logout() {
             localStorage.removeItem('laser_token');
             location.reload();
         }
-        function getToken() { return localStorage.getItem('laser_token'); }
 
-        function checkAuth() {
-            if(getToken()) {
-                document.getElementById('loginSection').classList.add('hidden');
-                document.getElementById('logoutSection').classList.remove('hidden');
-                document.getElementById('mainContent').classList.remove('opacity-50', 'pointer-events-none');
-                loadAll();
-            }
-        }
+        async function sync() {
+            const token = getAuth();
+            if(!token) return;
 
-        async function loadAll() {
+            document.getElementById('login-box').classList.add('hidden');
+            document.getElementById('logout-btn').classList.remove('hidden');
+            document.getElementById('admin-panel').classList.remove('hidden');
+
             const res = await fetch('/api/products');
             const data = await res.json();
-            const categories = data.filter(i => i.id.startsWith('cat_'));
-            const products = data.filter(i => i.id.startsWith('prod_'));
 
-            // Render Categorie nel select e nella lista
-            const select = document.getElementById('pCat');
-            const catList = document.getElementById('catList');
+            const cats = data.filter(i => i.id.startsWith('cat_'));
+            const prods = data.filter(i => i.id.startsWith('prod_'));
+
+            // Popola Categorie
+            const select = document.getElementById('p-cat');
+            const catDiv = document.getElementById('cat-list');
             select.innerHTML = '<option value="">Seleziona Categoria...</option>';
-            catList.innerHTML = '';
+            catDiv.innerHTML = '';
             
-            categories.forEach(c => {
+            cats.forEach(c => {
                 select.innerHTML += `<option value="${c.name}">${c.name}</option>`;
-                catList.innerHTML += `<span class="bg-slate-100 px-2 py-1 rounded text-[10px] flex items-center gap-2">${c.name} <button onclick="deleteItem('${c.id}')" class="text-red-500">×</button></span>`;
+                catDiv.innerHTML += `
+                    <div class="flex justify-between items-center bg-slate-50 p-3 rounded-xl border text-sm">
+                        <span class="font-medium">${c.name}</span>
+                        <button onclick="remove('${c.id}')" class="text-red-400 hover:text-red-600 font-bold">×</button>
+                    </div>`;
             });
 
-            // Render Prodotti
-            const list = document.getElementById('adminProductList');
-            list.innerHTML = products.map(p => `
-                <div class="bg-white p-4 rounded-xl shadow-sm border flex justify-between items-center">
-                    <div class="flex items-center gap-4">
-                        <img src="${p.image}" class="w-12 h-12 rounded object-cover">
-                        <div>
-                            <p class="font-bold text-sm">${p.name}</p>
-                            <p class="text-[10px] text-blue-500 uppercase font-bold">${p.category}</p>
-                        </div>
+            // Popola Prodotti
+            document.getElementById('prod-list').innerHTML = prods.map(p => `
+                <div class="p-4 bg-white border rounded-2xl flex gap-4 items-center">
+                    <img src="${p.image}" class="w-16 h-16 rounded-xl object-cover bg-slate-100">
+                    <div class="flex-1">
+                        <p class="font-bold text-sm leading-tight">${p.name}</p>
+                        <p class="text-[10px] font-bold text-blue-500 uppercase mt-1">${p.category}</p>
                     </div>
-                    <div class="flex gap-2">
-                        <button onclick="setupEdit('${p.id}', '${encodeURIComponent(JSON.stringify(p))}')" class="text-xs bg-slate-100 px-3 py-1 rounded">Modifica</button>
-                        <button onclick="deleteItem('${p.id}')" class="text-xs bg-red-50 text-red-600 px-3 py-1 rounded">Elimina</button>
-                    </div>
+                    <button onclick="remove('${p.id}')" class="text-xs bg-red-50 text-red-600 px-3 py-1 rounded-lg hover:bg-red-100 transition font-bold">Elimina</button>
                 </div>
             `).join('');
         }
 
-        async function addCategory() {
-            const name = document.getElementById('newCatName').value;
-            await fetch('/api/add-product', {
+        async function saveCat() {
+            const name = document.getElementById('cat-name').value;
+            if(!name) return;
+            const res = await fetch('/api/add-product', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'Authorization': getToken() },
+                headers: { 'Content-Type': 'application/json', 'Authorization': getAuth() },
                 body: JSON.stringify({ name, isCategory: true })
             });
-            document.getElementById('newCatName').value = '';
-            loadAll();
+            if(res.ok) location.reload();
         }
 
-        async function saveProduct() {
+        async function saveProd() {
             const data = {
-                id: document.getElementById('editId').value,
-                name: document.getElementById('pName').value,
-                category: document.getElementById('pCat').value,
-                description: document.getElementById('pDesc').value,
-                price: document.getElementById('pPrice').value,
-                material: document.getElementById('pMat').value,
-                image: document.getElementById('pImage').value
+                name: document.getElementById('p-name').value,
+                category: document.getElementById('p-cat').value,
+                price: document.getElementById('p-price').value,
+                material: document.getElementById('p-mat').value,
+                image: document.getElementById('p-img').value,
+                description: document.getElementById('p-desc').value
             };
             const res = await fetch('/api/add-product', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'Authorization': getToken() },
+                headers: { 'Content-Type': 'application/json', 'Authorization': getAuth() },
                 body: JSON.stringify(data)
             });
-            if(res.ok) { resetForm(); loadAll(); }
+            if(res.ok) location.reload();
+            else alert("Errore: controlla password e campi.");
         }
 
-        async function deleteItem(id) {
-            if(!confirm("Eliminare?")) return;
-            await fetch('/api/delete-product', {
+        async function remove(id) {
+            if(!confirm("Vuoi davvero eliminare questo elemento?")) return;
+            const res = await fetch('/api/delete-product', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id, token: getToken() })
+                body: JSON.stringify({ id, token: getAuth() })
             });
-            loadAll();
+            if(res.ok) location.reload();
         }
 
-        function setupEdit(id, json) {
-            const p = JSON.parse(decodeURIComponent(json));
-            document.getElementById('editId').value = id;
-            document.getElementById('pName').value = p.name;
-            document.getElementById('pCat').value = p.category;
-            document.getElementById('pDesc').value = p.description;
-            document.getElementById('pPrice').value = p.price;
-            document.getElementById('pMat').value = p.material;
-            document.getElementById('pImage').value = p.image;
-            document.getElementById('formTitle').innerText = "Modifica Prodotto";
-            document.getElementById('btnCancel').classList.remove('hidden');
-        }
-
-        function resetForm() {
-            document.getElementById('editId').value = '';
-            document.querySelectorAll('input:not(#adminToken), textarea, select').forEach(i => i.value = '');
-            document.getElementById('formTitle').innerText = "Dettagli Articolo";
-            document.getElementById('btnCancel').classList.add('hidden');
-        }
-
-        checkAuth();
+        sync();
     </script>
 </body>
 </html>
