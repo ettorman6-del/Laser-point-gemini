@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laser Point - Creazioni Laser</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .active-cat { background-color: #2563eb; color: white; shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); }
+    </style>
+</head>
+<body class="bg-slate-50 font-sans text-slate-900">
+
+    <nav class="bg-white/80 backdrop-blur-md sticky top-0 z-50 py-4 border-b">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <h1 class="text-2xl font-black tracking-tighter">LASER<span class="text-blue-600">POINT</span></h1>
+            <a href="/admin.html" class="text-xs font-bold uppercase tracking-widest text-slate-400 hover:text-blue-600">Admin</a>
+        </div>
+    </nav>
+
+    <header class="bg-slate-900 text-white py-20 text-center relative overflow-hidden">
+        <div class="container mx-auto px-6 relative z-10">
+            <h2 class="text-5xl font-extrabold mb-4">Artigianato Laser</h2>
+            <p class="text-slate-400 max-w-xl mx-auto">Regali unici e decorazioni personalizzate in legno e plexiglass per i tuoi momenti indimenticabili.</p>
+        </div>
+    </header>
+
+    <section class="py-10">
+        <div id="cat-nav" class="container mx-auto px-6 flex flex-wrap justify-center gap-3">
+            <button onclick="filterBy('Tutti')" class="cat-btn active-cat px-6 py-2 rounded-full border text-sm font-bold transition">Tutti</button>
+        </div>
+    </section>
+
+    <main class="container mx-auto px-6 pb-20">
+        <div id="prod-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            </div>
+    </main>
+
+    <script>
+        let allProducts = [];
+
+        async function init() {
+            const res = await fetch('/api/products');
+            const data = await res.json();
+            
+            const categories = data.filter(i => i.id.startsWith('cat_'));
+            allProducts = data.filter(i => i.id.startsWith('prod_'));
+
+            // Render bottoni categorie
+            const catNav = document.getElementById('cat-nav');
+            categories.forEach(c => {
+                catNav.innerHTML += `<button onclick="filterBy('${c.name}', this)" class="cat-btn px-6 py-2 rounded-full border bg-white text-sm font-bold transition hover:border-blue-600">${c.name}</button>`;
+            });
+
+            render(allProducts);
+        }
+
+        function filterBy(name, el) {
+            // Estetica bottoni
+            document.querySelectorAll('.cat-btn').forEach(b => b.className = "cat-btn px-6 py-2 rounded-full border bg-white text-sm font-bold transition");
+            if(el) el.className = "cat-btn active-cat px-6 py-2 rounded-full border text-sm font-bold transition";
+            else document.querySelector('.cat-btn').className = "cat-btn active-cat px-6 py-2 rounded-full border text-sm font-bold transition";
+
+            const filtered = name === 'Tutti' ? allProducts : allProducts.filter(p => p.category === name);
+            render(filtered);
+        }
+
+        function render(list) {
+            const grid = document.getElementById('prod-grid');
+            grid.innerHTML = list.map(p => `
+                <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-slate-100 group">
+                    <img src="${p.image}" class="w-full h-72 object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="p-6">
+                        <span class="text-[10px] font-bold text-blue-600 uppercase tracking-widest">${p.category}</span>
+                        <h3 class="text-xl font-bold mt-1">${p.name}</h3>
+                        <p class="text-slate-500 text-sm mt-2 h-10 overflow-hidden">${p.description}</p>
+                        <div class="flex justify-between items-center mt-6 pt-6 border-t">
+                            <span class="text-2xl font-black text-slate-900">€${parseFloat(p.price).toFixed(2)}</span>
+                            <button class="bg-slate-900 text-white px-5 py-2 rounded-xl text-sm font-bold hover:bg-blue-600 transition">Dettagli</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        init();
+    </script>
+</body>
+</html>
