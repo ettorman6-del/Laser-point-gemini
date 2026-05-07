@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Laser Point - Admin & Categorie</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 min-h-screen">
+    <div class="container mx-auto px-4 py-8 max-w-6xl">
+        <div class="flex justify-between items-center mb-8 bg-white p-6 rounded-2xl shadow-sm">
+            <h1 class="text-2xl font-black text-slate-800">LASER POINT <span class="text-blue-600">ADMIN</span></h1>
+            <div id="authArea">
+                <div id="loginSection" class="flex gap-2">
+                    <input type="password" id="adminToken" placeholder="Password" class="p-2 border rounded-lg text-sm">
+                    <button onclick="saveToken()" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-bold">Accedi</button>
+                </div>
+                <div id="logoutSection" class="hidden">
+                    <button onclick="logout()" class="text-red-500 text-sm font-bold border border-red-200 px-4 py-2 rounded-lg hover:bg-red-50">Esci</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mainContent" class="grid grid-cols-1 lg:grid-cols-3 gap-8 opacity-50 pointer-events-none transition-all">
+            <div class="space-y-6">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border">
+                    <h2 class="font-bold mb-4 text-blue-600 uppercase text-xs tracking-widest">Nuova Categoria</h2>
+                    <div class="flex gap-2">
+                        <input type="text" id="newCatName" placeholder="Es: Comunioni" class="flex-1 p-2 border rounded-lg text-sm">
+                        <button onclick="addCategory()" class="bg-blue-600 text-white px-4 py-2 rounded-lg">+</button>
+                    </div>
+                    <div id="catList" class="mt-4 flex flex-wrap gap-2"></div>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow-sm border sticky top-4">
+                    <h2 id="formTitle" class="font-bold mb-4 uppercase text-xs tracking-widest">Dettagli Articolo</h2>
+                    <input type="hidden" id="editId">
+                    <div class="space-y-3">
+                        <input type="text" id="pName" placeholder="Titolo Oggetto" class="w-full p-2 border rounded-lg text-sm">
+                        <select id="pCat" class="w-full p-2 border rounded-lg text-sm bg-slate-50">
+                            <option value="">Seleziona Categoria...</option>
+                        </select>
+                        <textarea id="pDesc" placeholder="Descrizione..." class="w-full p-2 border rounded-lg text-sm h-20"></textarea>
+                        <div class="flex gap-2">
+                            <input type="number" id="pPrice" placeholder="Prezzo €" step="0.01" class="w-1/2 p-2 border rounded-lg text-sm">
+                            <input type="text" id="pMat" placeholder="Materiale" class="w-1/2 p-2 border rounded-lg text-sm">
+                        </div>
+                        <input type="text" id="pImage" placeholder="Link Immagine ImgBB" class="w-full p-2 border rounded-lg text-sm">
+                        <button onclick="saveProduct()" class="w-full bg-slate-800 text-white py-3 rounded-xl font-bold hover:bg-blue-600 transition">SALVA ARTICOLO</button>
+                        <button onclick="resetForm()" id="btnCancel" class="hidden w-full py-2 text-xs text-slate-400">ANNULLA</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-2">
+                <div id="adminProductList" class="grid grid-cols-1 gap-4"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function saveToken() {
+            localStorage.setItem('laser_token', document.getElementById('adminToken').value);
+            checkAuth();
+        }
+        function logout() {
+            localStorage.removeItem('laser_token');
+            location.reload();
+        }
+        function getToken() { return localStorage.getItem('laser_token'); }
+
+        function checkAuth() {
+            if(getToken()) {
+                document.getElementById('loginSection').classList.add('hidden');
+                document.getElementById('logoutSection').classList.remove('hidden');
+                document.getElementById('mainContent').classList.remove('opacity-50', 'pointer-events-none');
+                loadAll();
+            }
+        }
+
+        async function loadAll() {
+            const res = await fetch('/api/products');
+            const data = await res.json();
+            const categories = data.filter(i => i.id.startsWith('cat_'));
+            const products = data.filter(i => i.id.startsWith('prod_'));
+
+            // Render Categorie nel select e nella lista
+            const select = document.getElementById('pCat');
+            const catList = document.getElementById('catList');
+            select.innerHTML = '<option value="">Seleziona Categoria...</option>';
+            catList.innerHTML = '';
+            
+            categories.forEach(c => {
+                select.innerHTML += `<option value="${c.name}">${c.name}</option>`;
+                catList.innerHTML += `<span class="bg-slate-100 px-2 py-1 rounded text-[10px] flex items-center gap-2">${c.name} <button onclick="deleteItem('${c.id}')" class="text-red-500">×</button></span>`;
+            });
+
+            // Render Prodotti
+            const list = document.getElementById('adminProductList');
+            list.innerHTML = products.map(p => `
+                <div class="bg-white p-4 rounded-xl shadow-sm border flex justify-between items-center">
+                    <div class="flex items-center gap-4">
+                        <img src="${p.image}" class="w-12 h-12 rounded object-cover">
+                        <div>
+                            <p class="font-bold text-sm">${p.name}</p>
+                            <p class="text-[10px] text-blue-500 uppercase font-bold">${p.category}</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="setupEdit('${p.id}', '${encodeURIComponent(JSON.stringify(p))}')" class="text-xs bg-slate-100 px-3 py-1 rounded">Modifica</button>
+                        <button onclick="deleteItem('${p.id}')" class="text-xs bg-red-50 text-red-600 px-3 py-1 rounded">Elimina</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        async function addCategory() {
+            const name = document.getElementById('newCatName').value;
+            await fetch('/api/add-product', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Authorization': getToken() },
+                body: JSON.stringify({ name, isCategory: true })
+            });
+            document.getElementById('newCatName').value = '';
+            loadAll();
+        }
+
+        async function saveProduct() {
+            const data = {
+                id: document.getElementById('editId').value,
+                name: document.getElementById('pName').value,
+                category: document.getElementById('pCat').value,
+                description: document.getElementById('pDesc').value,
+                price: document.getElementById('pPrice').value,
+                material: document.getElementById('pMat').value,
+                image: document.getElementById('pImage').value
+            };
+            const res = await fetch('/api/add-product', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Authorization': getToken() },
+                body: JSON.stringify(data)
+            });
+            if(res.ok) { resetForm(); loadAll(); }
+        }
+
+        async function deleteItem(id) {
+            if(!confirm("Eliminare?")) return;
+            await fetch('/api/delete-product', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id, token: getToken() })
+            });
+            loadAll();
+        }
+
+        function setupEdit(id, json) {
+            const p = JSON.parse(decodeURIComponent(json));
+            document.getElementById('editId').value = id;
+            document.getElementById('pName').value = p.name;
+            document.getElementById('pCat').value = p.category;
+            document.getElementById('pDesc').value = p.description;
+            document.getElementById('pPrice').value = p.price;
+            document.getElementById('pMat').value = p.material;
+            document.getElementById('pImage').value = p.image;
+            document.getElementById('formTitle').innerText = "Modifica Prodotto";
+            document.getElementById('btnCancel').classList.remove('hidden');
+        }
+
+        function resetForm() {
+            document.getElementById('editId').value = '';
+            document.querySelectorAll('input:not(#adminToken), textarea, select').forEach(i => i.value = '');
+            document.getElementById('formTitle').innerText = "Dettagli Articolo";
+            document.getElementById('btnCancel').classList.add('hidden');
+        }
+
+        checkAuth();
+    </script>
+</body>
+</html>
