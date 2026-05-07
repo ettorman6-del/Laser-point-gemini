@@ -2,139 +2,139 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <title>Laser Point - Admin Panel</title>
+    <title>Laser Point - Pannello Pulito</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-slate-50 min-h-screen p-4 md:p-8">
+<body class="bg-slate-100 p-4 md:p-10 text-slate-800">
     <div class="max-w-6xl mx-auto">
         
-        <div class="bg-white p-6 rounded-3xl shadow-sm border mb-8 flex flex-col md:flex-row justify-between items-center gap-4">
-            <h1 class="text-2xl font-black">LASER POINT <span class="text-blue-600 uppercase text-sm tracking-widest ml-2">Gestione</span></h1>
-            
-            <div id="login-box" class="flex gap-2">
-                <input type="password" id="pass-field" placeholder="Password Segreta" class="p-3 border rounded-xl text-sm outline-blue-500 shadow-inner">
-                <button onclick="login()" class="bg-blue-600 text-white px-6 py-2 rounded-xl font-bold hover:bg-blue-700 transition">Entra</button>
+        <div class="bg-white p-6 rounded-3xl shadow-sm mb-8 flex justify-between items-center border border-slate-200">
+            <h1 class="text-2xl font-black italic">LASER<span class="text-blue-600">POINT</span> ADMIN</h1>
+            <div id="auth-ui" class="flex gap-2">
+                <input type="password" id="admin-pass" placeholder="Password" class="p-2 border rounded-xl text-sm">
+                <button onclick="login()" class="bg-blue-600 text-white px-5 py-2 rounded-xl font-bold">Entra</button>
             </div>
-            
-            <button id="logout-btn" onclick="logout()" class="hidden text-red-500 font-bold hover:bg-red-50 px-4 py-2 rounded-xl border border-red-100 transition">Esci</button>
+            <button id="btn-logout" onclick="logout()" class="hidden text-red-500 font-bold">Esci</button>
         </div>
 
-        <div id="admin-panel" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <div id="main-panel" class="hidden grid grid-cols-1 lg:grid-cols-3 gap-8">
             
-            <div class="lg:col-span-4 space-y-6">
-                <div class="bg-white p-6 rounded-3xl shadow-sm border">
-                    <h2 class="font-bold text-slate-800 mb-4 flex items-center gap-2">
-                        <span class="w-2 h-2 bg-blue-600 rounded-full"></span> 1. Categorie
-                    </h2>
-                    <div class="flex gap-2 mb-6">
-                        <input type="text" id="cat-name" placeholder="Nuova (es. Compleanni)" class="flex-1 p-3 border rounded-xl text-sm">
-                        <button onclick="saveCat()" class="bg-slate-900 text-white px-4 rounded-xl hover:bg-blue-600 transition">+</button>
-                    </div>
-                    <div id="cat-list" class="space-y-2 max-h-40 overflow-y-auto pr-2">
-                        </div>
+            <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200">
+                <h2 class="font-bold mb-6 text-blue-600 uppercase text-xs tracking-widest">1. Categorie</h2>
+                <div class="flex gap-2 mb-6">
+                    <input type="text" id="cat-input" placeholder="Es: Matrimoni" class="flex-1 p-3 border rounded-xl text-sm outline-blue-500">
+                    <button onclick="addCategory()" class="bg-slate-800 text-white px-4 rounded-xl font-bold hover:bg-blue-600 transition">+</button>
                 </div>
-
-                <div class="bg-white p-6 rounded-3xl shadow-sm border sticky top-8">
-                    <h2 class="font-bold text-slate-800 mb-4 flex items-center gap-2">
-                        <span class="w-2 h-2 bg-blue-600 rounded-full"></span> 2. Nuovo Articolo
-                    </h2>
-                    <div class="space-y-3">
-                        <input type="text" id="p-name" placeholder="Nome Oggetto" class="w-full p-3 border rounded-xl text-sm">
-                        <select id="p-cat" class="w-full p-3 border rounded-xl text-sm bg-slate-50 outline-blue-500">
-                            <option value="">Seleziona Categoria...</option>
-                        </select>
-                        <div class="flex gap-2">
-                            <input type="number" id="p-price" placeholder="Prezzo €" step="0.01" class="w-1/2 p-3 border rounded-xl text-sm">
-                            <input type="text" id="p-mat" placeholder="Materiale" class="w-1/2 p-3 border rounded-xl text-sm">
-                        </div>
-                        <input type="text" id="p-img" placeholder="Link Immagine ImgBB" class="w-full p-3 border rounded-xl text-sm">
-                        <textarea id="p-desc" placeholder="Breve descrizione..." class="w-full p-3 border rounded-xl text-sm h-24"></textarea>
-                        
-                        <button onclick="saveProd()" class="w-full bg-blue-600 text-white py-4 rounded-2xl font-bold hover:bg-blue-700 shadow-lg shadow-blue-100 transition">
-                            Pubblica Prodotto
-                        </button>
+                <div id="list-categories" class="space-y-2">
                     </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200">
+                <h2 class="font-bold mb-6 text-blue-600 uppercase text-xs tracking-widest">2. Nuovo Prodotto</h2>
+                <div class="space-y-4">
+                    <input type="text" id="p-name" placeholder="Titolo Oggetto" class="w-full p-3 border rounded-xl text-sm">
+                    <select id="p-cat" class="w-full p-3 border rounded-xl text-sm bg-slate-50 outline-blue-500">
+                        </select>
+                    <div class="flex gap-2">
+                        <input type="number" id="p-price" placeholder="Prezzo €" step="0.01" class="w-1/2 p-3 border rounded-xl text-sm">
+                        <input type="text" id="p-mat" placeholder="Materiale" class="w-1/2 p-3 border rounded-xl text-sm">
+                    </div>
+                    <input type="text" id="p-img" placeholder="Link Immagine (ImgBB)" class="w-full p-3 border rounded-xl text-sm">
+                    <textarea id="p-desc" placeholder="Descrizione..." class="w-full p-3 border rounded-xl text-sm h-24"></textarea>
+                    <button onclick="saveProduct()" class="w-full bg-blue-600 text-white py-4 rounded-2xl font-bold hover:bg-blue-700 shadow-lg shadow-blue-100 transition">Pubblica</button>
                 </div>
             </div>
 
-            <div class="lg:col-span-8">
-                <div class="bg-white p-8 rounded-3xl shadow-sm border h-full">
-                    <h2 class="font-bold text-slate-800 mb-6 uppercase text-xs tracking-widest italic">Inventario Attuale</h2>
-                    <div id="prod-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        </div>
-                </div>
+            <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200">
+                <h2 class="font-bold mb-6 text-blue-600 uppercase text-xs tracking-widest">3. Inventario</h2>
+                <div id="list-products" class="space-y-3">
+                    </div>
             </div>
 
         </div>
     </div>
 
     <script>
+        let categories = [];
         const getAuth = () => localStorage.getItem('laser_token');
-        
+
         function login() {
-            localStorage.setItem('laser_token', document.getElementById('pass-field').value);
+            localStorage.setItem('laser_token', document.getElementById('admin-pass').value);
             location.reload();
         }
-        
+
         function logout() {
             localStorage.removeItem('laser_token');
             location.reload();
         }
 
-        async function sync() {
+        async function loadAll() {
             const token = getAuth();
             if(!token) return;
 
-            document.getElementById('login-box').classList.add('hidden');
-            document.getElementById('logout-btn').classList.remove('hidden');
-            document.getElementById('admin-panel').classList.remove('hidden');
+            document.getElementById('auth-ui').classList.add('hidden');
+            document.getElementById('btn-logout').classList.remove('hidden');
+            document.getElementById('main-panel').classList.remove('hidden');
 
-            const res = await fetch('/api/products');
-            const data = await res.json();
+            // Carica Categorie
+            const resCat = await fetch('/api/categories');
+            categories = await resCat.json();
+            renderCategories();
 
-            const cats = data.filter(i => i.id.startsWith('cat_'));
-            const prods = data.filter(i => i.id.startsWith('prod_'));
-
-            // Popola Categorie
-            const select = document.getElementById('p-cat');
-            const catDiv = document.getElementById('cat-list');
-            select.innerHTML = '<option value="">Seleziona Categoria...</option>';
-            catDiv.innerHTML = '';
-            
-            cats.forEach(c => {
-                select.innerHTML += `<option value="${c.name}">${c.name}</option>`;
-                catDiv.innerHTML += `
-                    <div class="flex justify-between items-center bg-slate-50 p-3 rounded-xl border text-sm">
-                        <span class="font-medium">${c.name}</span>
-                        <button onclick="remove('${c.id}')" class="text-red-400 hover:text-red-600 font-bold">×</button>
-                    </div>`;
-            });
-
-            // Popola Prodotti
-            document.getElementById('prod-list').innerHTML = prods.map(p => `
-                <div class="p-4 bg-white border rounded-2xl flex gap-4 items-center">
-                    <img src="${p.image}" class="w-16 h-16 rounded-xl object-cover bg-slate-100">
-                    <div class="flex-1">
-                        <p class="font-bold text-sm leading-tight">${p.name}</p>
-                        <p class="text-[10px] font-bold text-blue-500 uppercase mt-1">${p.category}</p>
-                    </div>
-                    <button onclick="remove('${p.id}')" class="text-xs bg-red-50 text-red-600 px-3 py-1 rounded-lg hover:bg-red-100 transition font-bold">Elimina</button>
-                </div>
-            `).join('');
+            // Carica Prodotti
+            const resProd = await fetch('/api/products');
+            const products = await resProd.json();
+            renderProducts(products);
         }
 
-        async function saveCat() {
-            const name = document.getElementById('cat-name').value;
-            if(!name) return;
-            const res = await fetch('/api/add-product', {
+        function renderCategories() {
+            const container = document.getElementById('list-categories');
+            const select = document.getElementById('p-cat');
+            
+            container.innerHTML = '';
+            select.innerHTML = '<option value="">Scegli Categoria...</option>';
+
+            categories.forEach((c, index) => {
+                container.innerHTML += `
+                    <div class="flex justify-between items-center bg-slate-50 p-3 rounded-xl border border-slate-100 text-sm">
+                        <span class="font-bold">${c}</span>
+                        <button onclick="deleteCategory(${index})" class="text-red-500 hover:text-red-700 font-bold">Elimina</button>
+                    </div>`;
+                select.innerHTML += `<option value="${c}">${c}</option>`;
+            });
+        }
+
+        async function addCategory() {
+            const input = document.getElementById('cat-input');
+            const val = input.value.trim();
+            if(!val) return;
+
+            categories.push(val);
+            const success = await syncCategories();
+            if(success) {
+                input.value = '';
+                renderCategories();
+            }
+        }
+
+        async function deleteCategory(index) {
+            if(!confirm("Vuoi eliminare questa categoria?")) return;
+            categories.splice(index, 1);
+            const success = await syncCategories();
+            if(success) renderCategories();
+        }
+
+        async function syncCategories() {
+            const res = await fetch('/api/categories', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Authorization': getAuth() },
-                body: JSON.stringify({ name, isCategory: true })
+                body: JSON.stringify(categories)
             });
-            if(res.ok) location.reload();
+            if(!res.ok) alert("Errore nel salvataggio! Controlla la password.");
+            return res.ok;
         }
 
-        async function saveProd() {
+        async function saveProduct() {
             const data = {
                 name: document.getElementById('p-name').value,
                 category: document.getElementById('p-cat').value,
@@ -143,26 +143,44 @@
                 image: document.getElementById('p-img').value,
                 description: document.getElementById('p-desc').value
             };
+
             const res = await fetch('/api/add-product', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Authorization': getAuth() },
                 body: JSON.stringify(data)
             });
-            if(res.ok) location.reload();
-            else alert("Errore: controlla password e campi.");
+            if(res.ok) {
+                alert("Prodotto salvato!");
+                location.reload();
+            }
         }
 
-        async function remove(id) {
-            if(!confirm("Vuoi davvero eliminare questo elemento?")) return;
-            const res = await fetch('/api/delete-product', {
+        function renderProducts(prods) {
+            document.getElementById('list-products').innerHTML = prods.map(p => `
+                <div class="bg-white p-3 border rounded-xl flex justify-between items-center shadow-sm">
+                    <div class="flex items-center gap-3">
+                        <img src="${p.image}" class="w-10 h-10 rounded-lg object-cover">
+                        <div>
+                            <p class="font-bold text-xs">${p.name}</p>
+                            <p class="text-[10px] text-blue-500 font-bold uppercase">${p.category}</p>
+                        </div>
+                    </div>
+                    <button onclick="deleteProduct('${p.id}')" class="text-red-400 text-xs">Elimina</button>
+                </div>
+            `).join('');
+        }
+
+        async function deleteProduct(id) {
+            if(!confirm("Sicuro?")) return;
+            await fetch('/api/delete-product', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ id, token: getAuth() })
             });
-            if(res.ok) location.reload();
+            location.reload();
         }
 
-        sync();
+        loadAll();
     </script>
 </body>
 </html>
